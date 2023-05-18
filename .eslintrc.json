@@ -17,6 +17,9 @@
   },
   "plugins": ["react", "@typescript-eslint"],
   "rules": {
-    "react/react-in-jsx-scope": "off"
+    "react/react-in-jsx-scope": "off",
+    "eol-last": ["error", "windows"],
+    "no-prototype-builtins": "off",
+    "no-extra-boolean-cast": "off"
   }
 }

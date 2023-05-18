@@ -21,10 +21,9 @@
 .form__input {
   padding: 7px;
   font-size: 22px;
-  /* margin-bottom: 10px; */
   width: -webkit-fill-available;
 
-  border: 2px solid gray;
+  border: 2px solid #808080;
   border-radius: 4px;
 }
 
@@ -42,13 +41,8 @@
 
   position: relative;
   border: 1px solid #000;
-  padding: 5px 10px;
-  /* top: -10px; */
-  /* right: 0; */
-  /* left: 0; */
   z-index: 1;
   background-color: #fff;
-  padding: 8px;
 }
 
 .form__vin-history-item {
@@ -62,15 +56,21 @@
 .form__vin-history-btn {
   width: 100%;
   text-align: left;
+  cursor: pointer;
+  padding: 8px 10px;
+}
+
+.form__vin-history-item:hover {
+  background-color: rgb(225 219 219);
 }
 
 .form__btn {
   padding: 8px;
   font-size: 22px;
   border-radius: 4px;
-  background-color: gray;
+  background-color: #808080;
   color: #fff;
-  border: 2px solid gray;
+  border: 2px solid #808080;
   cursor: pointer;
   transition: border-color 0.3s;
 

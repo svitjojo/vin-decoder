@@ -1,6 +1,7 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { getVariablesList } from '../../api/fetchVehicles';
 import { Variable } from '../../types/Variables';
+import { convertResponseKeysToLowerCase } from '../../helpers/convertKeysToLowerCase';
 
 interface State {
   items: Variable[],
@@ -21,8 +22,9 @@ export const getAllVariables = createAsyncThunk(
   async () => {
     try {
       const data = await getVariablesList();
+      const normalizedData = convertResponseKeysToLowerCase<Variable>(data);
 
-      return data.Results;
+      return normalizedData;
     } catch (error) {
       if (error instanceof Error) {
         throw Error(error.message);
@@ -36,7 +38,7 @@ const variablesSlice = createSlice({
   initialState,
   reducers: {
     getVariableById: (state, action: PayloadAction<number>) => {
-      state.selectedItem = state.items.find(item => item.ID === action.payload) || null;
+      state.selectedItem = state.items.find(item => item.iD === action.payload) || null;
     },
   },
   extraReducers(builder) {
@@ -46,7 +48,10 @@ const variablesSlice = createSlice({
       })
       .addCase(getAllVariables.fulfilled, (state, action) => {
         state.loaded = true;
-        state.items = action.payload;
+
+        if (action.payload) {
+          state.items = action.payload.results;
+        }
       })
       .addCase(getAllVariables.rejected, (state) => {
         state.hasError = true;

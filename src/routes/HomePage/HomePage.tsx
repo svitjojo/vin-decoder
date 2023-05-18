@@ -13,7 +13,7 @@ const HomePage = () => {
   const { decodedVin, lastSearched, lastDecodedVins } = useAppSelector(state => state.vins);
   const dispatch = useAppDispatch();
 
-  const filteredVinResult = filterVinResult(decodedVin?.Results || []);
+  const filteredVinResult = filterVinResult(decodedVin?.results || []);
 
   const handleVinCode = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
@@ -87,13 +87,13 @@ const HomePage = () => {
                     <div className="form__vin-history" onClick={handleClickOut}>
                       <ul className="form__vin-history-list">
                         {lastSearched.map(item => (
-                          <li className="form__vin-history-item" key={item.SearchCriteria}>
+                          <li className="form__vin-history-item" key={item.searchCriteria}>
                             <button
                               className="form__vin-history-btn"
                               type="button"
                               onClick={handleSelectedVinFromHistory}
                             >
-                              {item.SearchCriteria.slice(4)}
+                              {item.searchCriteria.slice(4)}
                             </button>
                           </li>
                         ))}
@@ -125,8 +125,8 @@ const HomePage = () => {
             <ul>
               {filteredVinResult
                 ? (filteredVinResult.map(result => (
-                    <li className="vin-section__results-item" key={result.VariableId}>
-                      <strong>{result.Variable}:</strong> {result.Value}
+                    <li className="vin-section__results-item" key={result.variableId}>
+                      <strong>{result.variable}:</strong> {result.value}
                     </li>
                   )))
                 : ''}

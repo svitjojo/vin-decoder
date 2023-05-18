@@ -21,7 +21,7 @@ const VariablePage = () => {
         navigate(-1);
       }}>{'< Back'}</a>
       {!!variable
-        ? parse(variable?.Description)
+        ? parse(variable?.description)
         : ''}
     </>
   );

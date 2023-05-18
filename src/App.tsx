@@ -10,7 +10,7 @@ const App = () => {
   return (
     <>
       <Header />
-      <div className="container">
+      <main className="container">
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/home" element={<Navigate to="/" replace />} />
@@ -22,7 +22,7 @@ const App = () => {
           
           <Route path="*" element={<ErrorPage />} />
         </Routes>
-      </div>
+      </main>
     </>
   );
 }

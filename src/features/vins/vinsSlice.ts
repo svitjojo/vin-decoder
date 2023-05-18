@@ -1,11 +1,13 @@
-import { getDecodedVin as getDecoded } from '../../api/fetchVehicles';
+import { loadDecodedVin } from '../../api/fetchVehicles';
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { VinResponse } from '../../types/Vin';
+import { ResponseFromServer } from '../../types/ResponseFromServer';
+import { convertResponseKeysToLowerCase } from '../../helpers/convertKeysToLowerCase';
+import { VinInfo } from '../../types/Vin';
 
 export interface VinsState { 
-  decodedVin: VinResponse | null,
+  decodedVin: ResponseFromServer<VinInfo> | null,
   lastDecodedVins: string[],
-  lastSearched: VinResponse[],
+  lastSearched: ResponseFromServer<VinInfo>[],
   loaded: boolean,
   hasError: boolean
 };
@@ -22,9 +24,10 @@ export const getDecodedVin = createAsyncThunk(
   'decodedVins/get',
   async (vin: string) => {
     try {
-      const decodedVin = await getDecoded(vin);
+      const decodedData = await loadDecodedVin(vin);
+      const normalizedDecodedData = convertResponseKeysToLowerCase<VinInfo>(decodedData);
 
-      return decodedVin;
+      return normalizedDecodedData;
     } catch (error) {
       if (error instanceof Error) {
         throw Error(error.message);
@@ -47,7 +50,7 @@ const vinsSlice = createSlice({
         state.lastDecodedVins.splice(5);
       }
 
-      const vinFromLastSearched = state.lastSearched.filter(vin => vin.SearchCriteria.includes(action.payload));
+      const vinFromLastSearched = state.lastSearched.filter(vin => vin.searchCriteria.includes(action.payload));
 
       if (vinFromLastSearched.length === 0 && state.decodedVin) {
 
@@ -59,7 +62,7 @@ const vinsSlice = createSlice({
       }
     },
     setDecodedVin: (state, action: PayloadAction<string>) => {
-      const decodedVinFromLastSearched = state.lastSearched.find(vin => vin.SearchCriteria.includes(action.payload));
+      const decodedVinFromLastSearched = state.lastSearched.find(vin => vin.searchCriteria.includes(action.payload));
 
       if (decodedVinFromLastSearched) {
         state.decodedVin = decodedVinFromLastSearched;
@@ -73,7 +76,10 @@ const vinsSlice = createSlice({
       })
       .addCase(getDecodedVin.fulfilled, (state, action) => {
         state.loaded = true;
-        state.decodedVin = action.payload;
+
+        if (action.payload) {
+          state.decodedVin = action.payload;
+        }
       })
       .addCase(getDecodedVin.rejected, (state) => {
         state.hasError = true;

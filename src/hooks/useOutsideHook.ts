@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
 
 export const useOutsideClick = <T extends HTMLElement>(callback: (event: React.MouseEvent<T>) => void) => {

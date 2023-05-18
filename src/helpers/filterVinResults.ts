@@ -5,7 +5,7 @@ const isValue = (value: null | string, variable: string) => {
 };
 
 export const filterVinResult = (vinResults: VinInfo[]) => {
-  const filteredResults = vinResults.filter(result => isValue(result.Value, result.Variable));
+  const filteredResults = vinResults.filter(result => isValue(result.value, result.variable));
 
   return filteredResults;
 };

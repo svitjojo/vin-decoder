@@ -22,8 +22,8 @@ export const VariablesListPage = () => {
       {variables.length > 0
         ? (
           variables.map(variable => (
-            <li key={variable.ID}>
-              <span>{variable.GroupName ?? 'No group name'}</span> - <Link to={`../variables/${variable.ID}`}>{variable.Name}</Link>
+            <li key={variable.iD}>
+              <span>{variable.groupName ?? 'No group name'}</span> - <Link to={`../variables/${variable.iD}`}>{variable.name}</Link>
             </li>
           ))
         ) : ''}

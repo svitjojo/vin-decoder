@@ -1,6 +1,6 @@
 const URL = 'https://vpic.nhtsa.dot.gov/api';
 
-export const getDecodedVin = async (vin: string) => {
+export const loadDecodedVin = async(vin: string) => {
   try {
     const response = await fetch(URL + `/vehicles/DecodeVin/${vin}?format=json`);
 
